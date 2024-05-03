@@ -1,0 +1,340 @@
+.message-container {
+  overflow-y: scroll; 
+  margin-bottom: 2em;
+  padding-right: 10px;
+}
+
+.message-container::-webkit-scrollbar {
+  width: 5px; 
+}
+.message-container::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 10px; 
+}
+
+.message-container > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.message-container .message {
+  max-width: 400px;
+  padding: 0.5em;
+  border-radius: 17px;
+  overflow-wrap: break-word;
+}
+
+.message-container .user {
+  background: #f34b4b;
+  color: #f0f0f0;
+  align-self: flex-end;
+}
+
+.message-container .bot {
+  background: #1270af;
+  color: #f7f7f7;
+  align-self: flex-start;
+}
+
+.message-container .options {
+  background: white;
+  display: flex;
+  align-items: center;
+}
+
+.message-container .options > div:first-child {
+  font-size: 1.3em;
+  margin: 0.7em 0.7em 0.9em 0.3em;
+  transform: rotate(90deg);
+}
+
+.message-container .options > div:first-child i {
+  color: #13ccc3;
+  animation: arrow-move 1.2s infinite;
+}
+
+@keyframes arrow-move {
+  0% {
+    transform: translateY(4px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+
+.message-container .options p {
+  padding: 0.5em;
+  margin-right: 0.8em;
+  background: #46b2c5;
+  color: #f7f7f7;
+  align-self: flex-start;
+  border-radius: 17px;
+}
+
+.message-container .options p:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+/* เพิ่ม CSS เมื่อปุ่มถูกเลือก */
+.message-container .options p.selected {
+  background: #d55656; /* เปลี่ยนสีเป็นสีแดง */
+}
+
+
+/* // import { message } from "antd";
+// import { Knowledge, RuleInterface } from "../../interface";
+// import { ResponseBotObject } from "../Chatbot/Chatbot1";
+// import Knowledges from "../../pages/knowledge";
+
+// let userResponseAnswer: string[] = []; 
+
+// export const analyzeNextSteps1 = (
+//   step: number,
+//   userResponse: string,
+//   dataKnowledge: Knowledge[],
+//   dataRules: RuleInterface[],
+//   setBotResponse: (response: ResponseBotObject) => void 
+// ) => {
+//   let StartingNodes: string[] = [];
+//   let RelationOfRule: string[] = [];
+//   let ConcludingNodes: string[] = []
+
+//   const findStartingNodesOfKnowledge = (
+//     dataKnowledge: Knowledge[],
+//     dataRules: RuleInterface[]
+//   ) => {
+//     const startingNodes: string[] = [];
+//     for (const rule of dataRules) {
+//       if (userResponseAnswer[1] === rule.KnowledgeTitle) {
+//         if (rule.Node1 && !startingNodes.includes(rule.Node1) && !userResponseAnswer.includes(rule.Node1)) {
+//           startingNodes.push(rule.Node1);
+//         }
+//         if (rule.Node2 && !startingNodes.includes(rule.Node2) && !userResponseAnswer.includes(rule.Node2)) {
+//           startingNodes.push(rule.Node2);
+//         }
+//       }
+//     }
+//     return startingNodes;
+//   };
+
+//   const ConcludingNodesOfKnowledge = (
+//     dataKnowledge: Knowledge[],
+//     dataRules: RuleInterface[]
+//   ) => {
+//     const concludingNodes: string[] = [];
+//     for (const rule of dataRules) {
+//       if (userResponseAnswer[1] === rule.KnowledgeTitle) {
+//       if (rule.Result1 && !concludingNodes.includes(rule.Result1)) {
+//         concludingNodes.push(rule.Result1);
+//       }
+//       if (rule.Result2 && !concludingNodes.includes(rule.Result2)) {
+//         concludingNodes.push(rule.Result2);
+//       }
+//     }
+//   }
+//     return concludingNodes;
+//   };
+
+
+//   const relationOfRule = (dataRules: RuleInterface[]) => {
+//     const relationRule: any[] = [];
+//     for (const rule of dataRules) {
+//       if (userResponseAnswer[1] === rule.KnowledgeTitle) {
+//         const rulee = [];
+//         rulee.push(rule.Node1 || "");
+//         rulee.push(rule.Operator.OperatorName);
+//         rulee.push(rule.Node2 || "");
+//         rulee.push(rule.Result1 || "");
+//         rulee.push(rule.Result2 || "");
+//         relationRule.push(...rulee);
+//       }
+//     }
+  
+//     return relationRule;
+//   };
+
+//   console.log("Step:", step);
+//   console.log("User Response:", userResponse);
+
+//   const relationRule = relationOfRule(dataRules);
+//   RelationOfRule = [...relationRule];
+//   console.log("ReslationOFRULE" , RelationOfRule)
+  
+//   const startingNodes = findStartingNodesOfKnowledge(dataKnowledge, dataRules);
+//   StartingNodes = [...startingNodes];
+
+//   const concludingNodes = ConcludingNodesOfKnowledge(dataKnowledge,dataRules)
+//   ConcludingNodes = [...concludingNodes]
+
+//   console.log("uu" , ConcludingNodes)
+//   console.log("startingnodes", StartingNodes)
+
+//   const evaluateResult = (dataRules: RuleInterface[]): string[] => {
+//     console.log("User Response Array:", userResponseAnswer);
+
+//     const RESULT: string[] = [];
+//     const operator1 = RelationOfRule[1];
+//     const rule1result1 =  ConcludingNodes[1];
+//     const rule1result2 =  ConcludingNodes[2];
+
+//     const operator2 = RelationOfRule[6];
+//     const rule2result1 =  ConcludingNodes[3];
+//     const rule2result2 =  ConcludingNodes[4];
+
+//     const operator3 = RelationOfRule[11];
+//     const rule3result1 =  ConcludingNodes[5];
+//     const rule3result2 = ConcludingNodes[6];
+
+//     const operator4 = RelationOfRule[16];
+//     const rule4result1 =  ConcludingNodes[7];
+//     const rule4result2 =  ConcludingNodes[8];
+
+//     const operator5 = RelationOfRule[21];
+//     const rule5result1 =  ConcludingNodes[9];
+//     const rule5result2 =  ConcludingNodes[10];
+
+//     const operator6 = RelationOfRule[26];
+//     const rule6result1 =  ConcludingNodes[11];
+//     const rule6result2 =  ConcludingNodes[12];
+
+//     const operator7 = RelationOfRule[31];
+//     const rule7result1 =  ConcludingNodes[13];
+//     const rule7result2 =  ConcludingNodes[14];
+
+//     let result1: string[] = ["ไม่มีอาการ", "ไม่มีอาการ"];
+//     let result2: string[] = ["ไม่มีอาการ", "ไม่มีอาการ"];
+//     let result3: string[] = ["ไม่มีอาการ", "ไม่มีอาการ"];
+//     let result4: string[] = ["ไม่มีอาการ", "ไม่มีอาการ"];
+//     let result5: string[] = ["ไม่มีอาการ", "ไม่มีอาการ"];
+//     let result6: string[] = ["ไม่มีอาการ", "ไม่มีอาการ"];
+//     let result7: string[] = ["ไม่มีอาการ", "ไม่มีอาการ"];
+
+//     // ประเมินผลลัพธ์สำหรับ Rule1
+//     if (operator1 === "AND") {
+//       if (userResponseAnswer[3] === "มีอาการ" && userResponseAnswer[4] === "มีอาการ") {
+//         result1 = [rule1result1, rule1result2];
+//       }
+//     } else if (operator1 === "OR") {
+//       if (userResponseAnswer[3] === "มีอาการ" || userResponseAnswer[4] === "มีอาการ") {
+//         result1 = [rule1result1, rule1result2];
+//       }
+//     }
+//     // ประเมินผลลัพธ์สำหรับ Rule2
+//     if (operator2 === "AND") {
+//       if (userResponseAnswer[5] === "มีอาการ" && userResponseAnswer[6] === "มีอาการ") {
+//         result2 = [rule2result1, rule2result2];
+//       }
+//     } else if (operator2 === "OR") {
+//       if (userResponseAnswer[5] === "มีอาการ" || userResponseAnswer[6] === "มีอาการ") {
+//         result2 = [rule2result1, rule2result2];
+//       }
+//     }
+//     // ประเมินผลลัพธ์สำหรับ Rule3
+//     if (operator3 === "AND") {
+//       if (userResponseAnswer[7] === "มีอาการ" && userResponseAnswer[8] === "มีอาการ") {
+//         result3 = [rule3result1, rule3result2];
+//       }
+//     } else if (operator3 === "OR") {
+//       if (userResponseAnswer[7] === "มีอาการ" || userResponseAnswer[8] === "มีอาการ") {
+//         result3 = [rule3result1, rule3result2];
+//       }
+//     }
+//     // ประเมินผลลัพธ์สำหรับ Rule4
+//     if (operator4 === "AND") {
+//       if (userResponseAnswer[9] === "มีอาการ" && userResponseAnswer[10] === "มีอาการ") {
+//         result4 = [rule4result1, rule4result2];
+//       }
+//     } else if (operator4 === "OR") {
+//       if (userResponseAnswer[9] === "มีอาการ" || userResponseAnswer[10] === "มีอาการ") {
+//         result4 = [rule4result1, rule4result2];
+//       }
+//     }
+//     // ประเมินผลลัพธ์สำหรับ Rule5
+//     if (operator5 === "AND") {
+//       if (userResponseAnswer[11] === "มีอาการ" && userResponseAnswer[12] === "มีอาการ") {
+//         result5 = [rule5result1, rule5result2];
+//       }
+//     } else if (operator5 === "OR") {
+//       if (userResponseAnswer[11] === "มีอาการ" || userResponseAnswer[12] === "มีอาการ") {
+//         result5 = [rule5result1, rule5result2];
+//       }
+//     }
+//     // ประเมินผลลัพธ์สำหรับ Rule6
+//     if (operator6 === "AND") {
+//       if (userResponseAnswer[13] === "มีอาการ" && userResponseAnswer[14] === "มีอาการ") {
+//         result6 = [rule6result1, rule6result2];
+//       }
+//     } else if (operator6 === "OR") {
+//       if (userResponseAnswer[13] === "มีอาการ" || userResponseAnswer[14] === "มีอาการ") {
+//         result6 = [rule6result1, rule6result2];
+//       }
+//     }
+//     // ประเมินผลลัพธ์สำหรับ Rule7
+//     if (operator7 === "AND") {
+//       if (userResponseAnswer[15] === "มีอาการ" && userResponseAnswer[16] === "มีอาการ") {
+//         result7 = [rule7result1, rule7result2];
+//       }
+//     } else if (operator7 === "OR") {
+//       if (userResponseAnswer[15] === "มีอาการ" || userResponseAnswer[16] === "มีอาการ") {
+//         result7 = [rule7result1, rule7result2];
+//       }
+//     }
+ 
+
+     
+//     RESULT.push(`${result1.join(',')} | ${result2.join(',')} | ${result3.join(',')} | ${result4.join(',')} | ${result5.join(',')} | ${result6.join(',')} | ${result7.join(',')}`);
+//     // RESULT.push(`${result5.join(',')} | ${result6.join(',')} | ${result7.join(',')}`);
+//     return RESULT;
+    
+//   };
+  
+
+  
+
+//   userResponseAnswer.push(userResponse); 
+
+//   if (step === 0) {
+//     return {
+//       purpose: "specify 2",
+//       message: `ยินดีที่ได้รู้จักครับบบ, คุณ ${userResponse} อยากจะสอบถามหรือมีข้อสงสยด้านใด?`,
+//       options: dataKnowledge.map((knowledge) => `${knowledge.Title}`),
+//     };
+//   } else if (step === 1) {
+//     return {
+//       purpose: "specify 3",
+//       message: `คุณได้เลือกรายการ ${userResponse} `,
+//       options: ["ยืนยัน", "ออกจากการสนทนา"],
+//     };
+//   }
+  
+// for (let i = 0; i < StartingNodes.length; i++) {
+//   if (step === i + 2) {
+//     if (i === StartingNodes.length - 1) {
+//       return {
+//         purpose: `คำถามปิดท้าย`,
+//         message: `คุณมีอาการ "${StartingNodes[i]}" ใช่หรือไม่ครับ ??\n`,
+//         options: ["มีอาการ", "ไม่มีอาการ"],
+//       };
+//     } else {
+//       return {
+//         purpose: `คำถาม`,
+//         message: `คุณมีอาการ "${StartingNodes[i]}" ใช่หรือไม่?\n`,
+//         options: ["มีอาการ", "ไม่มีอาการ"],
+//       };
+//     }
+//   }
+// }
+//   const RESULT = evaluateResult(dataRules);
+//   return {
+//     purpose: "RESULT",
+//     message: `ผลลัพธ์ของคุณคือ : ${RESULT}`,
+//     // message: `ผลลัพธ์ของคุณคือ : |"ไม่มีอาการ"|`,
+//     options: ["เริ่มสนทนาใหม่"],
+//   };
+// };
+ */
+

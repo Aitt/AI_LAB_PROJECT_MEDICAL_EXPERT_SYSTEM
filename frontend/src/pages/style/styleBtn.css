@@ -1,0 +1,47 @@
+.addbtn {
+    color: white;
+    background-color: rgb(197, 102, 24);
+    border: none;
+}
+.addbtn:hover {
+    background-color: chocolate !important;
+    color: aliceblue !important;
+}
+
+.editbtn {
+    color: white;
+    background-color: rgb(24, 171, 197);
+    border: none;
+}
+.editbtn:hover {
+    background-color: rgb(23, 119, 163) !important;
+    color: aliceblue !important;
+}
+
+
+.deleteicon {
+    color: white;
+    background-color: rgb(255, 45, 45);
+    border: none;
+}
+.deleteicon:hover {
+    background-color: rgb(165, 15, 10) !important;
+    color: aliceblue !important;
+}
+
+
+.createbtn {
+    color: white;
+    background-color: rgb(255, 45, 45);
+    border: none;
+}
+.createbtn:hover {
+    background-color: rgb(165, 15, 10) !important;
+    color: aliceblue !important;
+}
+
+/* .btnbox{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+} */
